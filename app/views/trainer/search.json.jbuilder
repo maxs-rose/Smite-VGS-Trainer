@@ -1,0 +1,1 @@
+json.array! @options, :combo, :value

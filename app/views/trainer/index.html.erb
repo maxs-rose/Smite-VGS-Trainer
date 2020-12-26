@@ -1,0 +1,31 @@
+<h1 >Welcome to the Smite VGS Trainer!</h1>
+
+<p>You Need to find: <%= @challenge.value%></p>
+<div id="input_container">
+</div>
+
+<div id="options">
+</div>
+
+<script>
+var inputString = ""
+$(document).on("keypress", function (e) {
+    console.log(e.which)
+    if(e.which == 13)
+    {
+        location.reload()
+    }
+    else 
+    {
+        inputString += e.key   
+        $.ajax({
+        url: "/search?data=" + inputString,
+        type: "get",
+        success: function(data) { 
+                $("#input_container")[0].innerHTML = inputString.toLowerCase()
+                $("#options")[0].innerHTML = JSON.stringify(data)
+            }
+        })
+    }
+});
+</script>
