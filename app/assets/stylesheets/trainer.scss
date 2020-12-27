@@ -1,20 +1,77 @@
 // Place all the styles related to the Trainer controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+@import "bulma";
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
 
-$bgCol: #073b4c;
-$lightBlue: #118ab2;
-$sucess: #06d6a0;
-$gold: #ffd166;
-$grey: #404040;
-$red: #ef476f;
+$fontColour: white;
+$background: #1b3a4b;
+$sucess: #006466;
+$vgsHintColour: #272640;
+$inputBorderColour: #0b525b;
 
-html{
-    background-color: white;
-    color: $grey;
+body{
+    display: flex;
+    justify-content: center;
+    font-family: 'Ubuntu', sans-serif;
+    background-color: $background;
+    color: $fontColour;
+}
+
+#page-container
+{
+    background-color: $background;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
 }
 
 .highlight
 {
     background-color: $sucess;
+}
+
+#input-container
+{
+    width: 10em;
+    display: flex;
+    height: 3em;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid $inputBorderColour;
+}
+
+#options{
+    margin-top: 2em;
+
+    li
+    {
+        margin: 0.2em;
+        padding: 0.2em 1em;
+        box-shadow: inset 0 0 2000px $vgsHintColour;
+        filter: bulr(100px);
+    }
+}
+
+#padder{
+    flex-grow: 1;
+}
+
+#score
+{
+    margin: 2em;
+}
+
+#challenge
+{
+    margin-bottom: 1em;
+
+    span
+    {
+        margin-left: 0.2em;
+        padding: 0.1em 1em;
+        background-color: $vgsHintColour;
+    }
 }

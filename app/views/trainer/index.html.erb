@@ -1,103 +1,33 @@
-<h1 >Welcome to the Smite VGS Trainer!</h1>
+<div id="page-container">
+    <h1 class="title" style="color: white">Welcome to the Smite VGS Trainer!</h1>
 
-<p>You Need to find: <span id="challenge-display"></span></p>
-<p>Score: <span id="score-display">0</span></p>
-<div id="input-container">
-Input Command
-</div>
+    <p id="score">Score: <span id="score-display">0</span></p>
+    <p id="challenge">You Need to find: <span id="challenge-display"></span></p>
+    <div id="input-container">
+    Input Command
+    </div>
 
-<div id="options">
-    <ul id="option-list">
-    </ul>
-</div>
+    <div id="options">
+        <ul id="option-list">
+        </ul>
+    </div>
 
-<div id="controls">
-    <ul>
-        <li>Enter: Clear input and get new challenge</li>
-        <li>Space: Clear input</li>
-    </ul>
-</div>
+    <div id='padder'>
+    </div>
 
-<script>
-var challenge = {};
-var score = 0;
+    <footer style="text-align:center">
+        <div id="controls">
+            <p>
+            Enter: Clear input and get new challenge, 
+            Space: Clear input, 
+            /: Show Challenge VGS
+            </p>
+        </div>
 
-$(document).ready(getChallenge())
-
-var inputString = ""
-$(document).on("keypress", function (e) {
-    if(e.which == 13)
-    {
-        getChallenge()
-        clear()
-        score = 0
-        $("#score-display")[0].innerHTML = score
-    }
-    else if(e.which == 32)
-    {
-        clear()
-        score = 0
-        $("#score-display")[0].innerHTML = score
-    }
-    else 
-    {
-        inputString += e.key   
-        $.ajax({
-        url: "/search?data=" + inputString,
-        type: "get",
-        success: function(data) { 
-                $("#input-container")[0].innerHTML = inputString.toLowerCase()
-
-                $("#option-list")[0].innerHTML = ""
-
-                data.forEach(function(obj)
-                {
-                    $("#option-list").append(`<li>${obj.combo} - ${obj.value}</li>`)
-                });
-
-                if(data.length == 1 && data[0].combo == challenge.combo)
-                {
-                    for(var i = 0; i < 4; i++)
-                    {
-                        $("#input-container").addClass("highlight")
-
-                        setTimeout(function() {
-                            $("#input-container").removeClass("highlight") 
-                        }, 100)
-                    }
-                    score++ 
-                    $("#score-display")[0].innerHTML = score
-                    getChallenge()
-                    clear()
-                }
-            },
-        error: function(data){
-                score = 0
-                $("#score-display")[0].innerHTML = score
-                clear()
-            }   
-        });
-    }
-});
-
-function clear()
-{
-    inputString = ""
-    combo = {}
-    $("#input-container")[0].innerHTML = "Input Command"
-    $("#option-list")[0].innerHTML = ""
-}
-
-function getChallenge()
-{
-    $.ajax({
-        url: "/challenge",
-        type: "get",
-        success: function(data)
-        {
-            challenge = data
-            $("#challenge-display")[0].innerHTML = challenge.value
-        }
-    });
-}
-</script>
+        <div id="name">
+        <p>
+            <strong style="color:white">Smite VGS Trainer</strong> created by <a href="https://github.com/maxs-rose" target="_blank">Max Rose</a> has no affiliation to HiRez or Smite.
+        </p>
+        </div>
+    </footer>
+<div>
