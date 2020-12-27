@@ -30,10 +30,14 @@ $(document).on("keypress", function (e) {
     {
         getChallenge()
         clear()
+        score = 0
+        $("#score-display")[0].innerHTML = score
     }
     else if(e.which == 32)
     {
         clear()
+        score = 0
+        $("#score-display")[0].innerHTML = score
     }
     else 
     {
@@ -68,8 +72,9 @@ $(document).on("keypress", function (e) {
                 }
             },
         error: function(data){
-                console.log("You lost :(")
-
+                score = 0
+                $("#score-display")[0].innerHTML = score
+                clear()
             }   
         });
     }
