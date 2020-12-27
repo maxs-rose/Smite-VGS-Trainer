@@ -4,4 +4,5 @@ Rails.application.routes.draw do
 
   get "search", controller: :trainer
   get "challenge", controller: :trainer
+  get "vgs", controller: :trainer
 end

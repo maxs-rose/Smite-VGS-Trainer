@@ -1,7 +1,11 @@
 class TrainerController < ApplicationController
-    before_action :force_json, only: [:search, :challenge]
+    before_action :force_json, only: [:search, :challenge, :vgs]
 
     def index
+    end
+
+    def vgs
+        @all = indexJsonRequest()
     end
 
     def challenge
@@ -14,6 +18,10 @@ class TrainerController < ApplicationController
     end
 
     private
+    def indexJsonRequest
+        Element.select(:combo, :value)
+    end
+
     def doSearch(input)
         if Element.where("combo like ?", "#{input}%").length == 1
             Element.where(combo: input).select(:combo, :value)
