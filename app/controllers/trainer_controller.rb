@@ -1,28 +1,29 @@
 class TrainerController < ApplicationController
-    before_action :selectNextChallenge
-    before_action :force_json, only: :search
+    before_action :force_json, only: [:search, :challenge]
 
     def index
-        @options = []
+    end
+
+    def challenge
+        @challenge = getChallenge()
     end
 
     def search
         userInput = input_params.downcase
-        puts userInput
-        if Element.where("combo like ?", "#{userInput}%").length == 1
-            @options = Element.where(combo: userInput).select(:combo, :value)
-        else
-            @options = Element.where("length(combo) == #{userInput.length + 1}").where("combo like ?", "#{userInput}%").select(:combo, :value)
-        end
+        @options = doSearch(userInput)
     end
 
     private
-    def selectNextChallenge
-        @challenge ||= getChallenge
+    def doSearch(input)
+        if Element.where("combo like ?", "#{input}%").length == 1
+            Element.where(combo: input).select(:combo, :value)
+        else
+            Element.where("length(combo) == #{input.length + 1}").where("combo like ?", "#{input}%").select(:combo, :value)
+        end
     end
 
     def getChallenge
-        return Element.where(final: true).sample
+        Element.where(final: true).sample
     end
 
     def input_params

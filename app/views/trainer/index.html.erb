@@ -1,19 +1,39 @@
 <h1 >Welcome to the Smite VGS Trainer!</h1>
 
-<p>You Need to find: <%= @challenge.value%></p>
-<div id="input_container">
+<p>You Need to find: <span id="challenge-display"></span></p>
+<p>Score: <span id="score-display">0</span></p>
+<div id="input-container">
+Input Command
 </div>
 
 <div id="options">
+    <ul id="option-list">
+    </ul>
+</div>
+
+<div id="controls">
+    <ul>
+        <li>Enter: Clear input and get new challenge</li>
+        <li>Space: Clear input</li>
+    </ul>
 </div>
 
 <script>
+var challenge = {};
+var score = 0;
+
+$(document).ready(getChallenge())
+
 var inputString = ""
 $(document).on("keypress", function (e) {
-    console.log(e.which)
     if(e.which == 13)
     {
-        location.reload()
+        getChallenge()
+        clear()
+    }
+    else if(e.which == 32)
+    {
+        clear()
     }
     else 
     {
@@ -22,10 +42,57 @@ $(document).on("keypress", function (e) {
         url: "/search?data=" + inputString,
         type: "get",
         success: function(data) { 
-                $("#input_container")[0].innerHTML = inputString.toLowerCase()
-                $("#options")[0].innerHTML = JSON.stringify(data)
-            }
-        })
+                $("#input-container")[0].innerHTML = inputString.toLowerCase()
+
+                $("#option-list")[0].innerHTML = ""
+
+                data.forEach(function(obj)
+                {
+                    $("#option-list").append(`<li>${obj.combo} - ${obj.value}</li>`)
+                });
+
+                if(data.length == 1 && data[0].combo == challenge.combo)
+                {
+                    for(var i = 0; i < 4; i++)
+                    {
+                        $("#input-container").addClass("highlight")
+
+                        setTimeout(function() {
+                            $("#input-container").removeClass("highlight") 
+                        }, 100)
+                    }
+                    score++ 
+                    $("#score-display")[0].innerHTML = score
+                    getChallenge()
+                    clear()
+                }
+            },
+        error: function(data){
+                console.log("You lost :(")
+
+            }   
+        });
     }
 });
+
+function clear()
+{
+    inputString = ""
+    combo = {}
+    $("#input-container")[0].innerHTML = "Input Command"
+    $("#option-list")[0].innerHTML = ""
+}
+
+function getChallenge()
+{
+    $.ajax({
+        url: "/challenge",
+        type: "get",
+        success: function(data)
+        {
+            challenge = data
+            $("#challenge-display")[0].innerHTML = challenge.value
+        }
+    });
+}
 </script>

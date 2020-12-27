@@ -1,4 +1,20 @@
 // Place all the styles related to the Trainer controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
-@import "bulma";
+
+$bgCol: #073b4c;
+$lightBlue: #118ab2;
+$sucess: #06d6a0;
+$gold: #ffd166;
+$grey: #404040;
+$red: #ef476f;
+
+html{
+    background-color: $bgCol;
+    color: $grey;
+}
+
+.highlight
+{
+    background-color: $sucess;
+}
