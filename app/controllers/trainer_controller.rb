@@ -18,7 +18,7 @@ class TrainerController < ApplicationController
         if Element.where("combo like ?", "#{input}%").length == 1
             Element.where(combo: input).select(:combo, :value)
         else
-            Element.where("length(combo) == ?", input.to_s.length + 1).where("combo like ?", "#{input}%").select(:combo, :value)
+            Element.where("length(combo) = ?", input.to_s.length + 1).where("combo like ?", "#{input}%").select(:combo, :value)
         end
     end
 
