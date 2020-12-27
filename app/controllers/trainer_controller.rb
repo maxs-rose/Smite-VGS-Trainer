@@ -19,7 +19,7 @@ class TrainerController < ApplicationController
 
     private
     def indexJsonRequest
-        Element.select(:combo, :value)
+        Element.select(:combo, :final, :value)
     end
 
     def doSearch(input)

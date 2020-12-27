@@ -1,1 +1,1 @@
-json.array! @all, :combo, :value
+json.array! @all, :combo, :final, :value
